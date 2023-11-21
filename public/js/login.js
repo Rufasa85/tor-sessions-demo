@@ -12,7 +12,7 @@ document.querySelector("#loginForm").addEventListener("submit",e=>{
         }
     }).then(res=>{
         if(res.ok){
-           location.href = "/secretclub";
+           location.href = "/profile";
         } else {
             alert("trumpet sound")
         }

@@ -36,7 +36,7 @@ router.get("/secretclub",(req,res)=>{
 
 router.get("/login",(req,res)=>{
     if(req.session.user){
-        res.redirect("/secretclub")
+        res.redirect("/profile")
     }
     res.render("login")
 })
