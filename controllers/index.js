@@ -23,4 +23,12 @@ router.get("/favcolor/:color",(req,res)=>{
     res.send("session updated!")
 })
 
+router.get("/secretclub",(req,res)=>{
+    if(!req.session.user){
+        res.status(403).json({msg:"login first to join the club!"})
+    } else {
+        res.send(`welcome to the club, ${req.session.user.username}!`)  
+    }
+})
+
 module.exports = router;

@@ -11,6 +11,10 @@ router.get("/",(req,res)=>{
         res.status(500).json({msg:"oh no!",err})
     })
 })
+router.get("/logout",(req,res)=>{
+    req.session.destroy();
+    res.send("logged out!")
+})
 //find one
 router.get("/:id",(req,res)=>{
     User.findByPk(req.params.id,{
@@ -51,6 +55,10 @@ router.post("/login",(req,res)=>{
             if(!bcrypt.compareSync(req.body.password,foundUser.password)){
                 res.status(401).json({msg:"Invalid username/password"})
             } else {
+                req.session.user = {
+                    id:foundUser.id,
+                    username:foundUser.username
+                }
                 res.json(foundUser)
             }
         }
@@ -91,5 +99,6 @@ router.delete("/:id",(req,res)=>{
         res.status(500).json({msg:"oh no!",err})
     })
 })
+
 
 module.exports = router;

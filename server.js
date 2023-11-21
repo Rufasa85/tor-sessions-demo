@@ -4,6 +4,9 @@ const exphbs = require('express-handlebars');
 const allRoutes = require('./controllers');
 const session = require("express-session")
 
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
+
 
 // Sets up the Express App
 // =============================================================
@@ -11,15 +14,19 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 // Requiring our models for syncing
 const { User,Todo} = require('./models');
-app.use(session({
-     secret: 'keyboard cat',
-     resave:false,
-     saveUninitialized:false,
-      cookie: { 
-        maxAge: 1000*60*60*2
-     }
+const sess = {
+    secret: 'Super secret secret',
+    cookie: {
+        maxAge:1000*60*60*2
+    },
+    resave: false,
+    saveUninitialized: true,
+    store: new SequelizeStore({
+        db: sequelize
     })
-    )
+};
+
+app.use(session(sess));
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -38,3 +45,5 @@ sequelize.sync({ force: false }).then(function() {
         console.log('App listening on PORT ' + PORT);
     });
 });
+
+
