@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const {User,Todo} = require('../models');
 
 //find all
@@ -33,6 +34,26 @@ router.post("/",(req,res)=>{
         res.json(newUser)
     }).catch(err=>{
         res.status(500).json({msg:"oh no!",err})
+    })
+})
+
+//login
+router.post("/login",(req,res)=>{
+    //1. find the user who is trying to login
+    User.findOne({
+        where:{
+            username:req.body.username
+        }
+    }).then(foundUser=>{
+        if(!foundUser){
+            res.status(401).json({msg:"Invalid username/password"})
+        } else {
+            if(!bcrypt.compareSync(req.body.password,foundUser.password)){
+                res.status(401).json({msg:"Invalid username/password"})
+            } else {
+                res.json(foundUser)
+            }
+        }
     })
 })
 //edit
