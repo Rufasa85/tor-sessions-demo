@@ -40,7 +40,6 @@ router.post("/",(req,res)=>{
         res.status(500).json({msg:"oh no!",err})
     })
 })
-
 //login
 router.post("/login",(req,res)=>{
     //1. find the user who is trying to login

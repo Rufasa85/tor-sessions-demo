@@ -48,6 +48,9 @@ router.post("/", (req, res) => {
 });
 //edit
 router.put("/:id", (req, res) => {
+  if (!req.session.user) {
+    res.status(403).json({ msg: "login first to join the club!" });
+  } else {
   Todo.update(
     {
       task: req.body.task,
@@ -56,6 +59,7 @@ router.put("/:id", (req, res) => {
     {
       where: {
         id: req.params.id,
+        UserId:req.session.user.id
       },
     }
   )
@@ -69,6 +73,7 @@ router.put("/:id", (req, res) => {
     .catch((err) => {
       res.status(500).json({ msg: "oh no!", err });
     });
+  }
 });
 //delete
 router.delete("/:id", (req, res) => {

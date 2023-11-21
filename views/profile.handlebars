@@ -1,0 +1,26 @@
+<h2>Welcome back, {{username}}!</h2>
+<div  class="formBox">
+
+<h3>Add a Todo</h3>
+<form id="addTodoForm">
+    <input id="addTodoInput" placeholder="task">
+    <button>Add Todo!</button>
+</form>
+</div>
+<hr>
+<h3>Your Todos:</h3>
+
+{{#each Todos}}
+<div class="todo-card">
+    {{#if isComplete}}
+    <h4 class="complete">{{task}}</h4>
+        <button class="markIncomplete" data-todoid="{{id}}">Mark Incomplete</button>
+    {{else}}
+    <h4 class="incomplete">{{task}}</h4>
+      <button class="markComplete" data-todoid="{{id}}">Mark Complete</button>
+    {{/if}}
+</div>
+{{/each}}
+
+
+<script src="/js/profile.js"></script>
