@@ -1,0 +1,9 @@
+header,footer{
+    min-height:10vh;
+    background:salmon;
+}
+
+main {
+    min-height: 80vh;
+    background:cornflowerblue;
+}
